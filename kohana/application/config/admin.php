@@ -1,7 +1,7 @@
 <?php
 return array(
     'auth' => array(
-        array('id' => 1, 'username' => 'antkachuk94', 'password' => 'SAsYsbukk2h16'),
+        array('id' => 1, 'username' => 'admin', 'password' => 'SAwc4VL5Fdsiw'),
     ),
     'modules' => array('news'),
     'auto_logout_time_miliseconds' => 600000, // 10 minutes
