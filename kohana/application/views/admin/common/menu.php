@@ -5,27 +5,20 @@ setTimeout(function() {
 }, <?php echo $config['auto_logout_time_miliseconds'] ?>);
 </script>
 
-<nav class="navbar navbar-default" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="<?php echo URL::base() ?>admin/index">Admin</a>
-  </div>
 
-  <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href='<?php echo URL::base() ?>admin/index'>Admin panel</a>
+    </div>
     <ul class="nav navbar-nav">
-        <?php foreach ($modules as $module): ?>
-        <li><a href="<?php echo $module->getListUrl() ?>"><?php echo $module->getDisplayName() ?></a></li>
-        <?php endforeach; ?>
+      <li id="home" class="active"><a href='<?php echo URL::base() ?>admin/index'>Home</a></li>
+      <li id="general"><a href='<?php echo URL::base() ?>admin/general'>General content</a></li>
+      <li id="paid"><a href='<?php echo URL::base() ?>admin/paid'>Paid content</a></li>
+      <li id="users"><a href='<?php echo URL::base() ?>admin/users'>Users management</a></li>
     </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="<?php echo URL::base() ?>admin/logout">Wyloguj się</a></li>
-    </ul>
-  </div><!-- /.navbar-collapse -->
+      <ul class="nav navbar-right">
+          <li><a href='<?php echo URL::base() ?>admin/logout'>Logout</a></li>
+      </ul>
+  </div>
 </nav>
