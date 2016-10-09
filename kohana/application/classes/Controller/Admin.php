@@ -42,6 +42,18 @@ class Controller_Admin extends Controller_Template
             exit;
         }
     }
+
+    public function action_general() {
+
+    }
+
+    public function action_paid() {
+
+    }
+
+    public function action_users() {
+
+    }
     
     public function action_login()
     {
@@ -58,24 +70,8 @@ class Controller_Admin extends Controller_Template
         $form->setPrepopulatedFields($prepopulatedFields);
         $validation = $form->validate();
         $formState = $form->getFormState();
-
-        $resultArray = DB::query(Database::SELECT, 'SELECT * FROM users')->execute();
-
+        
         if ($formState['state'] == Admin_Form_Add::STATE_FORM_SENDED_OK) {
-            foreach ($resultArray as $admin) {
-                if ($formState['data']['username'] == $admin['username'] && crypt($formState['data']['password'], $this->_config['salt']) == $admin['password']) {
-                    $this->_session->set('admin_user', $admin['id']);
-                    HTTP::redirect('admin/index');
-                    exit;
-                }
-            }
-
-            $form->setGlobalErrorMessage('Incorrect login and/or password!');
-            $formState = $form->getFormState();
-        }
-
-
-        /*if ($formState['state'] == Admin_Form_Add::STATE_FORM_SENDED_OK) {
             foreach ($this->_config['auth'] as $admin) {
                 if ($formState['data']['username'] == $admin['username'] && crypt($formState['data']['password'], $this->_config['salt']) == $admin['password']) {
                     $this->_session->set('admin_user', $admin['id']);
@@ -86,7 +82,7 @@ class Controller_Admin extends Controller_Template
             
             $form->setGlobalErrorMessage('Niepoprawny login i/lub hasło');
             $formState = $form->getFormState();
-        }*/
+        }
 
         $this->_view->set('form', $formState);
     }
@@ -96,45 +92,5 @@ class Controller_Admin extends Controller_Template
         $this->_session->set('admin_user', null);
         HTTP::redirect('admin/login');
         exit;
-    }
-    
-    public function action_module()
-    {
-        if (!$this->_user) {
-            HTTP::redirect('admin/login');
-            exit;
-        }
-        
-        $module = $this->request->param('module');
-        $moduleAction = $this->request->param('moduleAction');
-        
-        $className = 'Admin_Module_' . ucfirst($module);
-        if (!class_exists($className)) {
-            echo 'no module';
-            exit;
-        }
-        
-        $moduleClass = new $className($module);
-        
-        if (!$moduleClass instanceof Admin_Module) {
-            unset($moduleClass);
-            echo 'incorrect module';
-            exit;
-        }
-        
-        $moduleAction = $moduleAction . 'View';
-        $this->_view = $moduleClass->$moduleAction($this->request);
-    }
-
-    protected function _getUserIp()
-    {
-        $ip = '';
-        if (getenv("HTTP_CLIENT_IP"))
-            $ip = getenv("HTTP_CLIENT_IP");
-        else if(getenv("HTTP_X_FORWARDED_FOR"))
-            $ip = getenv("HTTP_X_FORWARDED_FOR");
-        else if(getenv("REMOTE_ADDR"))
-            $ip = getenv("REMOTE_ADDR"); 
-        return $ip;
     }
 }
